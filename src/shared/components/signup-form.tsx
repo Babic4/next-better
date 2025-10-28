@@ -1,6 +1,5 @@
 'use client'
 
-import { FormEvent } from 'react'
 import Link from 'next/link'
 import { cn } from '@/shared/lib/css'
 import { Button } from '@/shared/ui/button'
@@ -12,48 +11,94 @@ import {
   CardTitle,
 } from '@/shared/ui/card'
 import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/shared/ui/form'
+import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
 } from '@/shared/ui/field'
 import { Input } from '@/shared/ui/input'
+
+// validate
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 // better-auth
 import { authClient } from '@/shared/lib/auth-client'
+
+// validate zod
+const formSchema = z
+  .object({
+    name: z.string().min(2, {
+      message: 'Name must be at least 2 characters.',
+    }),
+    email: z.email({
+      message: 'Invalid email address.',
+    }),
+    password: z.string().min(8, {
+      message: 'Password must be at least 8 characters.',
+    }),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ['confirmPassword'],
+    message: 'Passwords do not match.',
+  })
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<'div'>) {
-  const fetchSighUp = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    console.log(
-      e.target.email.value,
-      e.target.name.value,
-      e.target.password.value
-    )
-    // const { data, error } = await authClient.signUp.email(
-    //   {
-    //     email, // user email address
-    //     password, // user password -> min 8 characters by default
-    //     name, // user display name
-    //     image, // User image URL (optional)
-    //     callbackURL: '/dashboard', // A URL to redirect to after the user verifies their email (optional)
-    //   },
-    //   {
-    //     onRequest: (ctx) => {
-    //       //show loading
-    //     },
-    //     onSuccess: (ctx) => {
-    //       //redirect to the dashboard or sign in page
-    //     },
-    //     onError: (ctx) => {
-    //       // display the error message
-    //       alert(ctx.error.message)
-    //     },
-    //   }
-    // )
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+  })
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log(values)
   }
+
+  // const fetchSighUp = async (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault()
+
+  //   const formData = new FormData(e.currentTarget)
+  //   console.log(formData, e.currentTarget)
+  //   const payload = {
+  //     email: formData.get('email') as string,
+  //     password: formData.get('password') as string,
+  //     name: formData.get('name') as string,
+  //     callbackURL: '/login',
+  //   }
+
+  //   console.log(payload)
+
+  //   const { data, error } = await authClient.signUp.email(payload, {
+  //     onRequest: (ctx) => {
+  //       //show loading
+  //     },
+  //     onSuccess: (ctx) => {
+  //       //redirect to the dashboard or sign in page
+  //     },
+  //     onError: (ctx) => {
+  //       // display the error message
+  //       alert(ctx.error.message)
+  //     },
+  //   })
+  //   console.log('success', data)
+  // }
 
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
@@ -65,46 +110,77 @@ export function SignupForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={fetchSighUp}>
-            <FieldGroup>
-              <Field>
-                <FieldLabel htmlFor='name'>Full Name</FieldLabel>
-                <Input id='name' type='text' placeholder='John Doe' required />
-              </Field>
-              <Field>
-                <FieldLabel htmlFor='email'>Email</FieldLabel>
-                <Input
-                  id='email'
-                  type='email'
-                  placeholder='m@example.com'
-                  required
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <FieldGroup>
+                <FormField
+                  control={form.control}
+                  name='name'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Full Name</FormLabel>
+                      <FormControl>
+                        <Input {...field} placeholder='John Doe' />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </Field>
-              <Field>
-                <Field className='grid grid-cols-2 gap-4'>
-                  <Field>
-                    <FieldLabel htmlFor='password'>Password</FieldLabel>
-                    <Input id='password' type='password' required />
+                <FormField
+                  control={form.control}
+                  name='email'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input {...field} placeholder='m@example.com' />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Field>
+                  <Field className='grid grid-cols-2 gap-4'>
+                    <FormField
+                      control={form.control}
+                      name='password'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Password</FormLabel>
+                          <FormControl>
+                            <Input type='password' {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name='confirmPassword'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Confirm Password</FormLabel>
+                          <FormControl>
+                            <Input type='password' {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                   </Field>
-                  <Field>
-                    <FieldLabel htmlFor='confirm-password'>
-                      Confirm Password
-                    </FieldLabel>
-                    <Input id='confirm-password' type='password' required />
-                  </Field>
+                  <FieldDescription>
+                    Must be at least 8 characters long.
+                  </FieldDescription>
                 </Field>
-                <FieldDescription>
-                  Must be at least 8 characters long.
-                </FieldDescription>
-              </Field>
-              <Field>
-                <Button type='submit'>Create Account</Button>
-                <FieldDescription className='text-center'>
-                  Already have an account? <Link href='/login'>Sign in</Link>
-                </FieldDescription>
-              </Field>
-            </FieldGroup>
-          </form>
+                <Field>
+                  <Button type='submit'>Create Account</Button>
+                  <FieldDescription className='text-center'>
+                    Already have an account? <Link href='/login'>Sign in</Link>
+                  </FieldDescription>
+                </Field>
+              </FieldGroup>
+            </form>
+          </Form>
         </CardContent>
       </Card>
       <FieldDescription className='px-6 text-center'>
