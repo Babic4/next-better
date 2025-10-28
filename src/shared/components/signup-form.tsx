@@ -1,3 +1,6 @@
+'use client'
+
+import { FormEvent } from 'react'
 import Link from 'next/link'
 import { cn } from '@/shared/lib/css'
 import { Button } from '@/shared/ui/button'
@@ -15,11 +18,43 @@ import {
   FieldLabel,
 } from '@/shared/ui/field'
 import { Input } from '@/shared/ui/input'
+// better-auth
+import { authClient } from '@/shared/lib/auth-client'
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<'div'>) {
+  const fetchSighUp = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    console.log(
+      e.target.email.value,
+      e.target.name.value,
+      e.target.password.value
+    )
+    // const { data, error } = await authClient.signUp.email(
+    //   {
+    //     email, // user email address
+    //     password, // user password -> min 8 characters by default
+    //     name, // user display name
+    //     image, // User image URL (optional)
+    //     callbackURL: '/dashboard', // A URL to redirect to after the user verifies their email (optional)
+    //   },
+    //   {
+    //     onRequest: (ctx) => {
+    //       //show loading
+    //     },
+    //     onSuccess: (ctx) => {
+    //       //redirect to the dashboard or sign in page
+    //     },
+    //     onError: (ctx) => {
+    //       // display the error message
+    //       alert(ctx.error.message)
+    //     },
+    //   }
+    // )
+  }
+
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card>
@@ -30,7 +65,7 @@ export function SignupForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={fetchSighUp}>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor='name'>Full Name</FieldLabel>
