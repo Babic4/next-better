@@ -67,38 +67,34 @@ export function SignupForm({
     },
   })
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values)
+    const { name, email, password } = values
+
+    console.log(name, email, password)
+
+    const { data, error } = await authClient.signUp.email(
+      {
+        email,
+        password,
+        name,
+        callbackURL: '/',
+      },
+      {
+        onRequest: (ctx) => {
+          //show loading
+        },
+        onSuccess: (ctx) => {
+          //redirect to the dashboard or sign in page
+        },
+        onError: (ctx) => {
+          // display the error message
+          alert(ctx.error.message)
+        },
+      }
+    )
+    console.log('success', data)
   }
-
-  // const fetchSighUp = async (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault()
-
-  //   const formData = new FormData(e.currentTarget)
-  //   console.log(formData, e.currentTarget)
-  //   const payload = {
-  //     email: formData.get('email') as string,
-  //     password: formData.get('password') as string,
-  //     name: formData.get('name') as string,
-  //     callbackURL: '/login',
-  //   }
-
-  //   console.log(payload)
-
-  //   const { data, error } = await authClient.signUp.email(payload, {
-  //     onRequest: (ctx) => {
-  //       //show loading
-  //     },
-  //     onSuccess: (ctx) => {
-  //       //redirect to the dashboard or sign in page
-  //     },
-  //     onError: (ctx) => {
-  //       // display the error message
-  //       alert(ctx.error.message)
-  //     },
-  //   })
-  //   console.log('success', data)
-  // }
 
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
