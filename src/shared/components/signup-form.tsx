@@ -13,18 +13,12 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/shared/ui/form'
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-} from '@/shared/ui/field'
+import { Field, FieldDescription, FieldGroup } from '@/shared/ui/field'
 import { Input } from '@/shared/ui/input'
 
 // validate
@@ -67,7 +61,7 @@ export function SignupForm({
     },
   })
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const fetchSignUp = async (values: z.infer<typeof formSchema>) => {
     console.log(values)
     const { name, email, password } = values
 
@@ -78,7 +72,7 @@ export function SignupForm({
         email,
         password,
         name,
-        callbackURL: '/',
+        callbackURL: '/login',
       },
       {
         onRequest: (ctx) => {
@@ -107,7 +101,7 @@ export function SignupForm({
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
+            <form onSubmit={form.handleSubmit(fetchSignUp)}>
               <FieldGroup>
                 <FormField
                   control={form.control}
@@ -136,7 +130,7 @@ export function SignupForm({
                   )}
                 />
                 <Field>
-                  <Field className='grid grid-cols-2 gap-4'>
+                  <Field className='grid grid-cols-2 gap-4 items-start'>
                     <FormField
                       control={form.control}
                       name='password'
