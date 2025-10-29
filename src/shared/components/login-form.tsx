@@ -65,13 +65,14 @@ export function LoginForm({
   const fetchSignIn = async (values: z.infer<typeof formSchema>) => {
     signInAction(values)
       .then((data) => {
-        if (data.status === 'error') {
+        if (data.status === 'success') {
+          router.push(data.redirectUrl)
+        } else {
           toast.error(data.message)
         }
-        if (data?.redirectUrl) router.push(data.redirectUrl)
       })
       .catch((error) => {
-        toast.error(error.message)
+        toast.error(error.message || 'Unknown message received.')
       })
   }
 

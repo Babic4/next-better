@@ -3,6 +3,19 @@
 import { headers } from 'next/headers'
 import { auth } from '@/shared/lib/auth'
 
+type SuccessResponse = {
+  status: 'success'
+  message: string
+  redirectUrl: string
+}
+
+type ErrorResponse = {
+  status: 'error'
+  message: string
+}
+
+type Response = SuccessResponse | ErrorResponse
+
 export async function signUpAction({
   name,
   email,
@@ -11,7 +24,7 @@ export async function signUpAction({
   name: string
   email: string
   password: string
-}) {
+}): Promise<Response> {
   try {
     const data = await auth.api.signUpEmail({
       body: {
@@ -41,7 +54,7 @@ export async function signInAction({
 }: {
   email: string
   password: string
-}) {
+}): Promise<Response> {
   try {
     const data = await auth.api.signInEmail({
       body: {
