@@ -27,8 +27,6 @@ import { Input } from '@/shared/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-// better-auth
-import { authClient } from '@/shared/lib/auth-client'
 // server action
 import { signUpAction } from '@/shared/api/auth'
 

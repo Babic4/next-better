@@ -26,7 +26,7 @@ export async function signUpAction({
   password: string
 }): Promise<Response> {
   try {
-    const data = await auth.api.signUpEmail({
+    await auth.api.signUpEmail({
       body: {
         name,
         email,
@@ -56,7 +56,7 @@ export async function signInAction({
   password: string
 }): Promise<Response> {
   try {
-    const data = await auth.api.signInEmail({
+    await auth.api.signInEmail({
       body: {
         email,
         password,
