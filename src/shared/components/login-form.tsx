@@ -33,8 +33,10 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 // better-auth
 import { authClient } from '@/shared/lib/auth-client'
+// server action
+import { signInAction } from '@/shared/api/auth'
 
-// validate zod
+// validate zodserver
 const formSchema = z.object({
   email: z.email({
     message: 'Invalid email address.',
@@ -57,28 +59,28 @@ export function LoginForm({
   })
 
   const fetchSignIn = async (values: z.infer<typeof formSchema>) => {
-    const { email, password } = values
-    const { data, error } = await authClient.signIn.email(
-      {
-        email,
-        password,
-        callbackURL: '/dashboard',
-        rememberMe: false,
-      },
-      {
-        onRequest: (ctx) => {
-          //show loading
-        },
-        onSuccess: (ctx) => {
-          //redirect to the dashboard or sign in page
-        },
-        onError: (ctx) => {
-          // display the error message
-          alert(ctx.error.message)
-        },
-      }
-    )
-    console.log('success', data)
+    signInAction(values)
+    // const { data } = await authClient.signIn.email(
+    //   {
+    //     email,
+    //     password,
+    //     callbackURL: '/dashboard',
+    //     rememberMe: false,
+    //   },
+    //   {
+    //     onRequest: () => {
+    //       //show loading
+    //     },
+    //     onSuccess: (ctx) => {
+    //       //redirect to the dashboard or sign in page
+    //     },
+    //     onError: (ctx) => {
+    //       // display the error message
+    //       alert(ctx.error.message)
+    //     },
+    //   }
+    // )
+    // console.log('success', data)
   }
 
   return (

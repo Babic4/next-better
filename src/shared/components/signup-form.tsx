@@ -27,6 +27,8 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 // better-auth
 import { authClient } from '@/shared/lib/auth-client'
+// server action
+import { signUpAction } from '@/shared/api/auth'
 
 // validate zod
 const formSchema = z
@@ -62,32 +64,31 @@ export function SignupForm({
   })
 
   const fetchSignUp = async (values: z.infer<typeof formSchema>) => {
-    console.log(values)
     const { name, email, password } = values
 
-    console.log(name, email, password)
+    signUpAction({ name, email, password })
 
-    const { data, error } = await authClient.signUp.email(
-      {
-        email,
-        password,
-        name,
-        callbackURL: '/login',
-      },
-      {
-        onRequest: (ctx) => {
-          //show loading
-        },
-        onSuccess: (ctx) => {
-          //redirect to the dashboard or sign in page
-        },
-        onError: (ctx) => {
-          // display the error message
-          alert(ctx.error.message)
-        },
-      }
-    )
-    console.log('success', data)
+    // const { data, error } = await authClient.signUp.email(
+    //   {
+    //     email,
+    //     password,
+    //     name,
+    //     callbackURL: '/login',
+    //   },
+    //   {
+    //     onRequest: (ctx) => {
+    //       //show loading
+    //     },
+    //     onSuccess: (ctx) => {
+    //       //redirect to the dashboard or sign in page
+    //     },
+    //     onError: (ctx) => {
+    //       // display the error message
+    //       alert(ctx.error.message)
+    //     },
+    //   }
+    // )
+    // console.log('success', data)
   }
 
   return (
