@@ -12,16 +12,27 @@ export async function signUpAction({
   email: string
   password: string
 }) {
-  const data = await auth.api.signUpEmail({
-    body: {
-      name,
-      email,
-      password,
-      callbackURL: '/',
-    },
-  })
-
-  console.log('success signUp', data)
+  try {
+    const data = await auth.api.signUpEmail({
+      body: {
+        name,
+        email,
+        password,
+        callbackURL: '/login',
+      },
+    })
+    return {
+      status: 'success',
+      message: 'Successfully!',
+      redirectUrl: '/login',
+    }
+  } catch (error) {
+    const e = error as Error
+    return {
+      status: 'error',
+      message: e.message || 'Unknown message received.',
+    }
+  }
 }
 
 export async function signInAction({
@@ -31,22 +42,40 @@ export async function signInAction({
   email: string
   password: string
 }) {
-  const data = await auth.api.signInEmail({
-    body: {
-      email,
-      password,
-      rememberMe: true,
-      callbackURL: '/dashboard',
-    },
-    // This endpoint requires session cookies.
-    headers: await headers(),
-  })
-
-  console.log('success signIn', data)
+  try {
+    const data = await auth.api.signInEmail({
+      body: {
+        email,
+        password,
+        rememberMe: true,
+        callbackURL: '/dashboard',
+      },
+      headers: await headers(),
+    })
+    return {
+      status: 'success',
+      message: 'Successfully!',
+      redirectUrl: '/dashboard',
+    }
+  } catch (error) {
+    const e = error as Error
+    return {
+      status: 'error',
+      message: e.message || 'Unknown message received.',
+    }
+  }
 }
 
 export async function signOutAction() {
-  await auth.api.signOut({
-    headers: await headers(),
-  })
+  try {
+    await auth.api.signOut({
+      headers: await headers(),
+    })
+  } catch (error) {
+    const e = error as Error
+    return {
+      status: 'error',
+      message: e.message || 'Unknown message received.',
+    }
+  }
 }

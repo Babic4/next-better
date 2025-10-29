@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 import { cn } from '@/shared/lib/css'
 import { Button } from '@/shared/ui/button'
 import {
@@ -36,7 +38,7 @@ import { authClient } from '@/shared/lib/auth-client'
 // server action
 import { signInAction } from '@/shared/api/auth'
 
-// validate zodserver
+// validate zod
 const formSchema = z.object({
   email: z.email({
     message: 'Invalid email address.',
@@ -50,6 +52,8 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<'div'>) {
+  const router = useRouter()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -60,27 +64,15 @@ export function LoginForm({
 
   const fetchSignIn = async (values: z.infer<typeof formSchema>) => {
     signInAction(values)
-    // const { data } = await authClient.signIn.email(
-    //   {
-    //     email,
-    //     password,
-    //     callbackURL: '/dashboard',
-    //     rememberMe: false,
-    //   },
-    //   {
-    //     onRequest: () => {
-    //       //show loading
-    //     },
-    //     onSuccess: (ctx) => {
-    //       //redirect to the dashboard or sign in page
-    //     },
-    //     onError: (ctx) => {
-    //       // display the error message
-    //       alert(ctx.error.message)
-    //     },
-    //   }
-    // )
-    // console.log('success', data)
+      .then((data) => {
+        if (data.status === 'error') {
+          toast.error(data.message)
+        }
+        if (data?.redirectUrl) router.push(data.redirectUrl)
+      })
+      .catch((error) => {
+        toast.error(error.message)
+      })
   }
 
   return (

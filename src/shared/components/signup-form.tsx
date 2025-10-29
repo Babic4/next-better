@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 import { cn } from '@/shared/lib/css'
 import { Button } from '@/shared/ui/button'
 import {
@@ -53,6 +55,8 @@ export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<'div'>) {
+  const router = useRouter()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -67,28 +71,15 @@ export function SignupForm({
     const { name, email, password } = values
 
     signUpAction({ name, email, password })
-
-    // const { data, error } = await authClient.signUp.email(
-    //   {
-    //     email,
-    //     password,
-    //     name,
-    //     callbackURL: '/login',
-    //   },
-    //   {
-    //     onRequest: (ctx) => {
-    //       //show loading
-    //     },
-    //     onSuccess: (ctx) => {
-    //       //redirect to the dashboard or sign in page
-    //     },
-    //     onError: (ctx) => {
-    //       // display the error message
-    //       alert(ctx.error.message)
-    //     },
-    //   }
-    // )
-    // console.log('success', data)
+      .then((data) => {
+        if (data.status === 'error') {
+          toast.error(data.message)
+        }
+        if (data?.redirectUrl) router.push(data.redirectUrl)
+      })
+      .catch((error) => {
+        toast.error(error.message)
+      })
   }
 
   return (
