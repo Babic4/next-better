@@ -1,12 +1,15 @@
 import { Fingerprint, LockKeyhole } from 'lucide-react'
+import Link from 'next/link'
 
 import { Button } from '@/shared/ui/button'
-import Link from 'next/link'
+import { DotPattern } from '@/shared/ui/dot-pattern'
+
+import { cn } from '@/shared/lib/css'
 
 export default function Home() {
   return (
-    <div className='flex min-h-screen items-center justify-center font-sans dark:bg-black'>
-      <main className='flex min-h-screen w-full max-w-3xl flex-col items-center justify-center py-32 px-16 bg-white dark:bg-black'>
+    <div className='flex min-h-screen items-center justify-center font-sans dark:bg-black relative'>
+      <main className='flex min-h-screen w-full max-w-3xl flex-col items-center justify-center py-32 px-16 dark:bg-black z-2'>
         <div className='flex flex-col items-center justify-center gap-6 text-center sm:text-left'>
           <h1 className='max-w-md text-3xl font-semibold leading-13 tracking-tight text-black text-center dark:text-zinc-50'>
             <span className='relative text-4xl'>
@@ -52,6 +55,22 @@ export default function Home() {
           </div>
         </div>
       </main>
+      <DotPattern
+        width={8}
+        height={8}
+        cr={1.6}
+        glow={true}
+        className='text-yellow-400 [mask-image:radial-gradient(400px_circle_at_center,white,transparent)]'
+      />
+      {/* [mask-image:radial-gradient(500px_circle_at_center,white,transparent)] */}
+      <DotPattern
+        width={16}
+        height={16}
+        cr={1.2}
+        glow={true}
+        className='text-gray-950 [mask-image:radial-gradient(800px_circle_at_center,white,transparent)]'
+      />
+      {/* [mask-image:radial-gradient(700px_circle_at_center,transparent,white)] */}
     </div>
   )
 }
