@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import {
   BadgeCheck,
   Bell,
@@ -37,11 +38,12 @@ export function NavUser({
     avatar: string
   }
 }) {
+  const router = useRouter()
   const { isMobile } = useSidebar()
 
   const fetchLogout = () => {
-    console.log('test')
     signOutAction()
+    router.push('/login')
   }
 
   return (
