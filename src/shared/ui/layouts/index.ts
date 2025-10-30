@@ -1,2 +1,2 @@
-export { PublicWrapper } from './public-layout'
-export { AppWrapper } from './app-layout'
+export { PublicShell } from './public-layout'
+export { AppShell } from './app-layout'

@@ -1,3 +1,3 @@
-export const PublicWrapper = ({ children }: { children: React.ReactNode }) => {
+export const PublicShell = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>
 }

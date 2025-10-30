@@ -14,7 +14,7 @@ import {
   SidebarTrigger,
 } from '@/shared/ui/sidebar'
 
-export const AppWrapper = ({ children }: { children: React.ReactNode }) => {
+export const AppShell = ({ children }: { children: React.ReactNode }) => {
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -41,7 +41,7 @@ export const AppWrapper = ({ children }: { children: React.ReactNode }) => {
             </Breadcrumb>
           </div>
         </header>
-        {children}
+        <div className='flex flex-1 flex-col gap-4 p-4 pt-0'>{children}</div>
       </SidebarInset>
     </SidebarProvider>
   )

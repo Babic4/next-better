@@ -1,5 +1,5 @@
-import { AppWrapper } from '@/shared/ui/layouts'
+import { AppShell } from '@/shared/ui/layouts'
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  return <AppWrapper>{children}</AppWrapper>
+  return <AppShell>{children}</AppShell>
 }

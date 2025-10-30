@@ -1,9 +1,9 @@
-import { PublicWrapper } from '@/shared/ui/layouts'
+import { PublicShell } from '@/shared/ui/layouts'
 
 export default function PublicLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return <PublicWrapper>{children}</PublicWrapper>
+  return <PublicShell>{children}</PublicShell>
 }

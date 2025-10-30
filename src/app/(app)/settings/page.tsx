@@ -1,6 +1,6 @@
 export default function SettingsPage() {
   return (
-    <div>
+    <>
       <h1>Settings</h1>
       <p>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias
@@ -15,6 +15,6 @@ export default function SettingsPage() {
         repellendus ratione quam quae officiis deleniti hic soluta placeat, eos
         et, quos recusandae deserunt!
       </p>
-    </div>
+    </>
   )
 }
