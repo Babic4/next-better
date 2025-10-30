@@ -22,6 +22,7 @@ import {
 } from '@/shared/ui/form'
 import { Field, FieldDescription, FieldGroup } from '@/shared/ui/field'
 import { Input } from '@/shared/ui/input'
+import { Password } from '@/shared/ui/password'
 
 // validate
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -129,7 +130,7 @@ export function SignupForm({
                         <FormItem>
                           <FormLabel>Password</FormLabel>
                           <FormControl>
-                            <Input type='password' {...field} />
+                            <Password placeholder='******' {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -142,7 +143,7 @@ export function SignupForm({
                         <FormItem>
                           <FormLabel>Confirm Password</FormLabel>
                           <FormControl>
-                            <Input type='password' {...field} />
+                            <Password placeholder='******' {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>

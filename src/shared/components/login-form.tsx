@@ -27,6 +27,7 @@ import {
   FieldSeparator,
 } from '@/shared/ui/field'
 import { Input } from '@/shared/ui/input'
+import { Password } from '@/shared/ui/password'
 
 // validate
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -121,7 +122,7 @@ export function LoginForm({
                     <FormItem>
                       <FormLabel>Password</FormLabel>
                       <FormControl>
-                        <Input type='password' {...field} />
+                        <Password placeholder='******' {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
