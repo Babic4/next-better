@@ -24,7 +24,7 @@ export default function Home() {
             <br /> with{' '}
             <span className='relative'>
               <span
-                className='absolute -inset-0.5 block bg-gray-900/10 rounded-sm'
+                className='absolute -inset-0.5 block bg-gray-900/15 rounded-sm'
                 aria-hidden='true'
               ></span>
               <span className='relative font-bold text-black'>Next</span>
@@ -32,7 +32,7 @@ export default function Home() {
             and{' '}
             <span className='relative'>
               <span
-                className='absolute -inset-0.5 block bg-gray-900/10 rounded-sm'
+                className='absolute -inset-0.5 block bg-gray-900/15 rounded-sm'
                 aria-hidden='true'
               ></span>
               <span className='relative font-bold text-black'>Better-Auth</span>
@@ -62,7 +62,6 @@ export default function Home() {
         glow={true}
         className='text-yellow-400 [mask-image:radial-gradient(400px_circle_at_center,white,transparent)]'
       />
-      {/* [mask-image:radial-gradient(500px_circle_at_center,white,transparent)] */}
       <DotPattern
         width={16}
         height={16}
@@ -70,7 +69,6 @@ export default function Home() {
         glow={true}
         className='text-gray-950 [mask-image:radial-gradient(800px_circle_at_center,white,transparent)]'
       />
-      {/* [mask-image:radial-gradient(700px_circle_at_center,transparent,white)] */}
     </div>
   )
 }
