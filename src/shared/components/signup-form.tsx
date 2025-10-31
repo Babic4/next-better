@@ -74,10 +74,12 @@ export function SignupForm({
         if (data.status === 'success') {
           router.push(data.redirectUrl)
         } else {
+          console.log(data)
           toast.error(data.message)
         }
       })
       .catch((error) => {
+        console.log(error)
         toast.error(error.message || 'Unknown message received.')
       })
   }
