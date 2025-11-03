@@ -26,8 +26,10 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/shared/ui/sidebar'
+import { Skeleton } from '@/shared/ui/skeleton'
 // server action
 import { signOutAction } from '@/shared/api/auth'
+import { authClient } from '@/shared/lib/auth-client'
 
 export function NavUser({
   user,
@@ -40,6 +42,8 @@ export function NavUser({
 }) {
   const router = useRouter()
   const { isMobile } = useSidebar()
+
+  const { data: authData, isPending } = authClient.useSession()
 
   const fetchLogout = () => {
     signOutAction()
@@ -60,8 +64,21 @@ export function NavUser({
                 <AvatarFallback className='rounded-lg'>CN</AvatarFallback>
               </Avatar>
               <div className='grid flex-1 text-left text-sm leading-tight'>
-                <span className='truncate font-medium'>{user.name}</span>
-                <span className='truncate text-xs'>{user.email}</span>
+                {isPending || !authData ? (
+                  <div className='flex flex-col gap-1'>
+                    <Skeleton className='w-full h-[14px]' />
+                    <Skeleton className='w-full h-[12px]' />
+                  </div>
+                ) : (
+                  <>
+                    <span className='truncate font-medium'>
+                      {authData.user.name}
+                    </span>
+                    <span className='truncate text-xs'>
+                      {authData.user.email}
+                    </span>
+                  </>
+                )}
               </div>
               <ChevronsUpDown className='ml-auto size-4' />
             </SidebarMenuButton>
@@ -79,8 +96,21 @@ export function NavUser({
                   <AvatarFallback className='rounded-lg'>CN</AvatarFallback>
                 </Avatar>
                 <div className='grid flex-1 text-left text-sm leading-tight'>
-                  <span className='truncate font-medium'>{user.name}</span>
-                  <span className='truncate text-xs'>{user.email}</span>
+                  {isPending || !authData ? (
+                    <div className='flex flex-col gap-1'>
+                      <Skeleton className='w-full h-[14px]' />
+                      <Skeleton className='w-full h-[12px]' />
+                    </div>
+                  ) : (
+                    <>
+                      <span className='truncate font-medium'>
+                        {authData.user.name}
+                      </span>
+                      <span className='truncate text-xs'>
+                        {authData.user.email}
+                      </span>
+                    </>
+                  )}
                 </div>
               </div>
             </DropdownMenuLabel>

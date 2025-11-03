@@ -124,7 +124,7 @@ export function SignupForm({
                   )}
                 />
                 <Field>
-                  <Field className='grid grid-cols-2 gap-4 items-start'>
+                  <Field className='flex gap-4 sm:grid sm:grid-cols-2 sm:items-start'>
                     <FormField
                       control={form.control}
                       name='password'
