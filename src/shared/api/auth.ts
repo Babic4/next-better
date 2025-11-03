@@ -31,6 +31,7 @@ export async function signUpAction({
         name,
         email,
         password,
+        image: '/avatars/babxxh.png',
         callbackURL: '/login',
       },
     })
