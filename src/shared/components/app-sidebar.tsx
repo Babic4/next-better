@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { LayoutDashboard, Command, Settings } from 'lucide-react'
+import { LayoutDashboard, Command, Settings, Folder, Users } from 'lucide-react'
 
 import { NavMain } from '@/shared/components/nav-main'
 import { NavSecondary } from '@/shared/components/nav-secondary'
@@ -22,6 +22,16 @@ const data = {
       title: 'Dashboard',
       url: '/dashboard',
       icon: LayoutDashboard,
+    },
+    {
+      title: 'Projects',
+      url: '#',
+      icon: Folder,
+    },
+    {
+      title: 'Team',
+      url: '#',
+      icon: Users,
     },
   ],
   navSecondary: [
