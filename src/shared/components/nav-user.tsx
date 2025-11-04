@@ -31,15 +31,7 @@ import { Skeleton } from '@/shared/ui/skeleton'
 import { signOutAction } from '@/shared/api/auth'
 import { authClient } from '@/shared/lib/auth-client'
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string
-    email: string
-    avatar: string
-  }
-}) {
+export function NavUser() {
   const router = useRouter()
   const { isMobile } = useSidebar()
 
@@ -59,27 +51,33 @@ export function NavUser({
               size='lg'
               className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
             >
-              <Avatar className='h-8 w-8 rounded-lg'>
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className='rounded-lg'>CN</AvatarFallback>
-              </Avatar>
-              <div className='grid flex-1 text-left text-sm leading-tight'>
-                {isPending || !authData ? (
-                  <div className='flex flex-col gap-1'>
+              {isPending || !authData ? (
+                <>
+                  <Skeleton className='h-8 w-8 rounded-lg' />
+                  <div className='flex flex-1 flex-col gap-1'>
                     <Skeleton className='w-full h-[14px]' />
                     <Skeleton className='w-full h-[12px]' />
                   </div>
-                ) : (
-                  <>
+                </>
+              ) : (
+                <>
+                  <Avatar className='h-8 w-8 rounded-lg'>
+                    <AvatarImage
+                      src={authData.user.image || ''}
+                      alt={authData.user.name}
+                    />
+                    <AvatarFallback className='rounded-lg'>CN</AvatarFallback>
+                  </Avatar>
+                  <div className='grid flex-1 text-left text-sm leading-tight'>
                     <span className='truncate font-medium'>
                       {authData.user.name}
                     </span>
                     <span className='truncate text-xs'>
                       {authData.user.email}
                     </span>
-                  </>
-                )}
-              </div>
+                  </div>
+                </>
+              )}
               <ChevronsUpDown className='ml-auto size-4' />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
@@ -91,27 +89,33 @@ export function NavUser({
           >
             <DropdownMenuLabel className='p-0 font-normal'>
               <div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>
-                <Avatar className='h-8 w-8 rounded-lg'>
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className='rounded-lg'>CN</AvatarFallback>
-                </Avatar>
-                <div className='grid flex-1 text-left text-sm leading-tight'>
-                  {isPending || !authData ? (
-                    <div className='flex flex-col gap-1'>
+                {isPending || !authData ? (
+                  <>
+                    <Skeleton className='h-8 w-8 rounded-lg' />
+                    <div className='flex flex-1 flex-col gap-1'>
                       <Skeleton className='w-full h-[14px]' />
                       <Skeleton className='w-full h-[12px]' />
                     </div>
-                  ) : (
-                    <>
+                  </>
+                ) : (
+                  <>
+                    <Avatar className='h-8 w-8 rounded-lg'>
+                      <AvatarImage
+                        src={authData.user?.image || ''}
+                        alt={authData.user.name}
+                      />
+                      <AvatarFallback className='rounded-lg'>CN</AvatarFallback>
+                    </Avatar>
+                    <div className='grid flex-1 text-left text-sm leading-tight'>
                       <span className='truncate font-medium'>
                         {authData.user.name}
                       </span>
                       <span className='truncate text-xs'>
                         {authData.user.email}
                       </span>
-                    </>
-                  )}
-                </div>
+                    </div>
+                  </>
+                )}
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
