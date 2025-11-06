@@ -1,10 +1,22 @@
+'use client'
+
+import { useRouter } from 'next/navigation'
 import { Tabs, TabsList, TabsTrigger } from '@/shared/ui/tabs'
+
+// constant
+import { TABS } from './tabs'
 
 export default function SettingsLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const router = useRouter()
+
+  const openTab = (url: string) => {
+    router.push(`/settings/${url}`)
+  }
+
   return (
     <div className='flex flex-col gap-6'>
       <div>
@@ -15,24 +27,20 @@ export default function SettingsLayout({
       </div>
       <div>
         <Tabs defaultValue='account' className='w-[400px]'>
-          <TabsList>
-            <TabsTrigger value='account'>Account</TabsTrigger>
-            <TabsTrigger value='organization'>Organization</TabsTrigger>
-            <TabsTrigger value='billing'>Billing</TabsTrigger>
-            <TabsTrigger value='notification'> Notification</TabsTrigger>
+          <TabsList
+            className='h-auto'
+            style={{ paddingBlock: '6px', paddingInline: '10px' }}
+          >
+            {TABS.map((tab) => (
+              <TabsTrigger
+                key={tab.value}
+                value={tab.value}
+                onClick={() => openTab(tab.href)}
+              >
+                {tab.label}
+              </TabsTrigger>
+            ))}
           </TabsList>
-          {/* <TabsContent value='account'>
-            Make changes to your account here.
-          </TabsContent>
-          <TabsContent value='organization'>
-            Create and setting your organization.
-          </TabsContent>
-          <TabsContent value='billing'>
-            Connecting additional services.
-          </TabsContent>
-          <TabsContent value='notification'>
-            Setting notifications for app.
-          </TabsContent> */}
         </Tabs>
       </div>
       <div>{children}</div>

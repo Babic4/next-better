@@ -1,5 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs'
 
+// constant
+
 export default function SettingsPage() {
   return (
     <div className='flex flex-col gap-6'>
@@ -15,7 +17,7 @@ export default function SettingsPage() {
             <TabsTrigger value='account'>Account</TabsTrigger>
             <TabsTrigger value='organization'>Organization</TabsTrigger>
             <TabsTrigger value='billing'>Billing</TabsTrigger>
-            <TabsTrigger value='notification'> Notification</TabsTrigger>
+            <TabsTrigger value='notification'>Notification</TabsTrigger>
           </TabsList>
           <TabsContent value='account'>
             Make changes to your account here.
